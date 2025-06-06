@@ -9,7 +9,7 @@ blueprint:
     switch:
       name: Switch
       selector:
-        domain: device
+        device:
     label:
       name: Label
       description: Label that devices have that will be controlled
