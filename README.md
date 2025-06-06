@@ -1,2 +1,4 @@
 # ha-automations
-Home Assistant automations use Go 
+
+
+Home Assistant Automations & Blueprints

@@ -1,0 +1,66 @@
+blueprint:
+  name: Inovelli Room Handler
+  description: When an noville switch is double tapped will turn on/off all the lights & switches with a specific label. 
+  domain: automation
+  source_url: https://github.com/ha-automations/switch-toggler.yaml
+  author: clbx
+  input:
+
+    switch:
+      name: Switch
+      selector:
+        domain: device
+    label:
+      name: Label
+      description: Label that devices have that will be controlled
+      selector:
+        label:
+
+mode: single
+
+triggers:
+  - domain: mqtt
+    device_id: !input switch
+    type: action
+    subtype: up_double
+    trigger: device
+    id: "0"
+  - domain: mqtt
+    device_id: !input switch
+    type: action
+    subtype: down_double
+    trigger: device
+    id: "1"
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - "0"
+        sequence:
+          - action: light.turn_on
+            metadata: {}
+            data: {}
+            target:
+              label_id: !input label
+          - action: switch.turn_on
+            metadata: {}
+            data: {}
+            target:
+              label_id: !input label
+      - conditions:
+          - condition: trigger
+            id:
+              - "1"
+        sequence:
+          - action: light.turn_off
+            metadata: {}
+            data: {}
+            target:
+              label_id: !input label
+          - action: switch.turn_off
+            metadata: {}
+            data: {}
+            target:
+              label_id: !input label
